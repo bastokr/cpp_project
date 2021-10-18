@@ -1,31 +1,115 @@
-﻿// ConsoleApplication2.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
+﻿
+
+#include <iostream> 
+#include <string>
+#define  CATEGORIES 5
+
+using namespace  std;
+// function 1: reads five category names into the cat array
+void get_category(std::string cat[CATEGORIES]);
+
+// function 2: gets five values for each category
+void get_values(double values[CATEGORIES], std::string cat[CATEGORIES]);
+
+// function 3: computes the total value and stores in total
+void compute_total(double& total, double vals[CATEGORIES]);
+
+// function 4: computes the longest category name and stores in longest
+void get_longest_category_name(int& longest, std::string cat[CATEGORIES]);
+
+// function 5: prints to std : cout the five category bar chart
+void bar_chart(std::string cat[CATEGORIES], double values[CATEGORIES], int lcl, double total);
+
+int main() {
+	std::string categories[CATEGORIES];
+	double values[CATEGORIES]; double total{ 0.0 }; int lcl{ 0 };
+
+	while (true) {
+		get_category(categories);
+		get_values(values, categories);
+		compute_total(total, values);
+		get_longest_category_name(lcl, categories);
+
+		std::cout << "\n Categories as a Percentage of the Total ( category_amount /" << total << ")\n";
+		std::cout << " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		bar_chart(categories, values, lcl, total);
+		std::cout << "\n Enter y to create another bar chart , 24 or any other key to exit : ";
+		std::string response; std::cin >> response; std::cout << "\n";
+		if (response != "y")
+			break;
+		lcl = 0; total = 0.0;
+
+		 
+		 
+	}// while
+
+}// main
+//
+// Implementations go below
 //
 
-#include <iostream>
-using namespace std;
- 
- 
+void get_category(std::string cat[CATEGORIES]){
+	std::cout << " Enter in the category names for your five -bar bar chart :\n";
+	int count = 0;
+	while (count < CATEGORIES) {
+		std::cin >> cat[count];
 
-
-int main()
-{
-    cout << "Hello World!\n";
-
-    int a;
-
-    cout << abs(1.2); 
-   // std::abs(1.2);
-
-    a = 5;
+		++count;
+	}
 }
 
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
+// function 2: gets five values for each category
+void get_values(double values[CATEGORIES], std::string cat[CATEGORIES]) {
+	int count = 0;
+	while (count < CATEGORIES) {
+ 
+		std::cout << "How many in the " + cat[count] + " category ? ";
+		std::cin >> values[count];
+		++count;
+	}
+	 
+}
 
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
+// function 3: computes the total value and stores in total
+void compute_total(double& total, double vals[CATEGORIES]) {
+
+  	for (int i = 0; i < CATEGORIES;i++) {
+		total = total + vals[i];
+ 	}
+ 	//std::cout << "total value= " << total  << endl;
+
+}
+
+// function 4: computes the longest category name and stores in longest
+void get_longest_category_name(int& longest, std::string cat[CATEGORIES]) {
+	 
+	longest = 0;
+   	for (int i = 0; i < CATEGORIES; i++) {
+		if (cat[i].length() > longest) longest = cat[i].length();
+	}
+
+	//std::cout << "total value= " << longest << endl;
+
+}
+
+// function 5: prints to std : cout the five category bar chart
+void bar_chart(std::string cat[CATEGORIES], double values[CATEGORIES], int lcl, double total) {
+ 
+	std::cout << fixed;
+	std::cout.precision(2);
+  
+	lcl = lcl + 3;
+	std::cout << endl;
+  
+	for (int i = 0; i < CATEGORIES; i++) {
+		cout.fill(' ');
+		cout << cat[i];
+		cout.width(lcl - cat[i].length());
+		cout << '*';
+		cout.width(lcl + round((values[i] / total) * 100));
+		cout.fill('*');
+		cout << right << ((values[i] / total) * 100) << endl;
+  	}
+  
+}
+ 

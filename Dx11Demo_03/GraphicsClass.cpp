@@ -59,8 +59,8 @@ bool GraphicsClass::Frame()
 bool GraphicsClass::Render()
 {
 	// 씬을 그리기 위해 버퍼를 지웁니다
-	m_Direct3D->BeginScene(0.5f, 0.5f, 0.5f, 1.0f);
-
+	m_Direct3D->BeginScene(0.0f, 0.0f, 1.0f, 0.0f);
+	 
 
 	// 버퍼의 내용을 화면에 출력합니다
 	m_Direct3D->EndScene();
